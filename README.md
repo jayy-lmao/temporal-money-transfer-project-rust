@@ -75,7 +75,8 @@ Now you can see the workflow run to completion.
 
 ## Running Tests
 
-The project includes unit tests for activities and workflow replay tests that run without a Temporal Server:
+The project includes unit tests for activities and workflow replay tests that run without a Temporal Server.
+This is a bit of a prototype on my part as I couldn't see any obvious way to do this with the current rust sdk alpha:
 
 ```bash
 cargo test
