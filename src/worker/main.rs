@@ -3,14 +3,9 @@ use temporalio_client::{Client, ClientOptions, Connection, ConnectionOptions};
 use temporalio_sdk::{Worker, WorkerOptions};
 use temporalio_sdk_core::{CoreRuntime, RuntimeOptions, Url};
 
-use crate::{
+use temporal_rs_tutorial::{
     activity::Activities, shared::MONEY_TRANSFER_TASK_QUEUE_NAME, workflow::MoneyTransferWorkflow,
 };
-
-pub mod activity;
-mod banking_client;
-mod shared;
-mod workflow;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {

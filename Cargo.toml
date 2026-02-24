@@ -15,7 +15,19 @@ temporalio-macros = "0.1.0"
 temporalio-sdk = "0.1.0-alpha.1"
 rand = "0.9"
 thiserror = "2"
-uuid = { version = "1.21.0", features = ["serde"] }
+uuid = { version = "1.21.0", features = ["serde", "v4"] }
 tokio = { version = "1.49.0", features = ["full"] }
 temporalio-sdk-core = "0.1.0"
 temporalio-client = "0.1.0"
+
+[lib]
+name = "temporal_rs_tutorial"
+path = "src/lib.rs"
+
+[[bin]]
+name = "worker"
+path = "src/worker/main.rs"
+
+[[bin]]
+name = "start"
+path = "src/start/main.rs"
