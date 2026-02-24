@@ -1,3 +1,7 @@
+[workspace]
+members = [".", "temporal-test-harness"]
+resolver = "3"
+
 [package]
 name = "money-transfer-project-template-rust"
 version = "0.1.0"
@@ -37,3 +41,4 @@ temporalio-sdk-core = { version = "0.1.0", features = ["test-utilities"] }
 temporalio-common = { version = "0.1.0", features = ["test-utilities"] }
 tokio = { version = "1.49.0", features = ["full", "test-util"] }
 assert_matches = "1.5"
+temporal-test-harness = { path = "temporal-test-harness" }

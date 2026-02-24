@@ -1,0 +1,13 @@
+[package]
+name = "temporal-test-harness"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+temporalio-sdk-core = { version = "0.1.0", features = ["test-utilities"] }
+temporalio-common = { version = "0.1.0", features = ["test-utilities"] }
+temporalio-sdk = "0.1.0-alpha.1"
+serde = "1.0"
+serde_json = "1.0"
+tokio = { version = "1.49.0", features = ["full", "test-util"] }
+thiserror = "2"

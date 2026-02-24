@@ -1233,6 +1233,7 @@ dependencies = [
  "rust_decimal",
  "serde",
  "serde_json",
+ "temporal-test-harness",
  "temporalio-client",
  "temporalio-common",
  "temporalio-macros",
@@ -2403,6 +2404,19 @@ dependencies = [
  "once_cell",
  "rustix",
  "windows-sys 0.61.2",
+]
+
+[[package]]
+name = "temporal-test-harness"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+ "temporalio-common",
+ "temporalio-sdk",
+ "temporalio-sdk-core",
+ "thiserror 2.0.18",
+ "tokio",
 ]
 
 [[package]]
