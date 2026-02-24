@@ -92,11 +92,6 @@ impl TestWorkflowEnvironment {
         }
     }
 
-    /// Set the timeout for the worker run. Defaults to 15 seconds.
-    pub fn set_test_timeout(&mut self, duration: Duration) {
-        self.timeout = duration;
-    }
-
     /// Execute the workflow, storing the result internally.
     ///
     /// After this returns, use [`is_workflow_completed`], [`workflow_error`], and

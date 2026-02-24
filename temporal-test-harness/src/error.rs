@@ -8,7 +8,7 @@ use temporalio_common::protos::temporal::api::{
 /// `Ok(Some(payloads))` — workflow completed successfully with a result payload.
 /// `Ok(None)` — workflow completed successfully with no result.
 /// `Err(failure)` — workflow failed (either via explicit FailWorkflowExecution or WFT failure).
-pub type WorkflowTestResult = Result<Option<Payloads>, WorkflowFailure>;
+pub(crate) type WorkflowTestResult = Result<Option<Payloads>, WorkflowFailure>;
 
 /// Describes a workflow failure captured from the mock worker.
 #[derive(Debug, Clone)]
