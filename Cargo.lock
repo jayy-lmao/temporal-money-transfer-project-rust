@@ -47,6 +47,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7c02d123df017efcdfbd739ef81735b36c5ba83ec3c59c80a9d7ecc718f92e50"
 
 [[package]]
+name = "assert_matches"
+version = "1.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9b34d609dfbaf33d6889b2b7106d3ca345eacad44200913df5ba02bfd31d2ba9"
+
+[[package]]
 name = "async-trait"
 version = "0.1.89"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -128,6 +134,12 @@ name = "base64"
 version = "0.22.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "72b3254f16251a8381aa12e40e3c4d2f0199f8c6508fbecb9d91f575e0fbb8c6"
+
+[[package]]
+name = "bimap"
+version = "0.6.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "230c5f1ca6a325a32553f8640d31ac9b49f2411e901e427570154868b46da4f7"
 
 [[package]]
 name = "bitflags"
@@ -1213,6 +1225,7 @@ dependencies = [
 name = "money-transfer-project-template-rust"
 version = "0.1.0"
 dependencies = [
+ "assert_matches",
  "futures",
  "futures-util",
  "prost-wkt-types",
@@ -2518,8 +2531,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1120435d28befd05b548ac8783590790a86db5f5ab24e44c39a83004d4d22e47"
 dependencies = [
  "anyhow",
+ "assert_matches",
  "async-trait",
  "backoff",
+ "bimap",
  "bon",
  "crossbeam-channel",
  "crossbeam-queue",
