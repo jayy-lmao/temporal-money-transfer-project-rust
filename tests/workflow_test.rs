@@ -3,7 +3,7 @@ use std::str::FromStr;
 
 use money_transfer_project_template_rust::{
     activity::Activities,
-    shared::{PaymentDetails, MONEY_TRANSFER_TASK_QUEUE_NAME},
+    shared::{MONEY_TRANSFER_TASK_QUEUE_NAME, PaymentDetails},
     workflow::MoneyTransferWorkflow,
 };
 use rust_decimal::Decimal;
@@ -14,8 +14,8 @@ use temporalio_client::{
 };
 use temporalio_sdk::{Worker, WorkerOptions};
 use temporalio_sdk_core::{
-    ephemeral_server::{default_cached_download, TemporalDevServerConfig},
     CoreRuntime, RuntimeOptions, Url,
+    ephemeral_server::{TemporalDevServerConfig, default_cached_download},
 };
 
 /// Build a PaymentDetails input for tests.
@@ -32,8 +32,10 @@ fn test_payment_details() -> PaymentDetails {
 async fn test_money_transfer_happy_path() {
     let mut env = TestWorkflowEnvironment::new();
     env.register_activities(Activities);
-    env.on_activity("Activities::withdraw").returns("W1234567890");
-    env.on_activity("Activities::deposit").returns("D0987654321");
+    env.on_activity("Activities::withdraw")
+        .returns("W1234567890");
+    env.on_activity("Activities::deposit")
+        .returns("D0987654321");
 
     env.execute_workflow::<MoneyTransferWorkflow>(test_payment_details())
         .await
@@ -56,8 +58,10 @@ async fn test_money_transfer_happy_path() {
 async fn test_money_transfer_deposit_fails() {
     let mut env = TestWorkflowEnvironment::new();
     env.register_activities(Activities);
-    env.on_activity("Activities::withdraw").returns("W1234567890");
-    env.on_activity("Activities::deposit").returns_err("deposit failed");
+    env.on_activity("Activities::withdraw")
+        .returns("W1234567890");
+    env.on_activity("Activities::deposit")
+        .returns_err("deposit failed");
 
     env.execute_workflow::<MoneyTransferWorkflow>(test_payment_details())
         .await
@@ -71,7 +75,8 @@ async fn test_money_transfer_deposit_fails() {
 async fn test_money_transfer_withdraw_fails() {
     let mut env = TestWorkflowEnvironment::new();
     env.register_activities(Activities);
-    env.on_activity("Activities::withdraw").returns_err("withdraw failed");
+    env.on_activity("Activities::withdraw")
+        .returns_err("withdraw failed");
 
     env.execute_workflow::<MoneyTransferWorkflow>(test_payment_details())
         .await
@@ -81,7 +86,7 @@ async fn test_money_transfer_withdraw_fails() {
     assert!(env.workflow_error().is_some());
 }
 
-#[tokio::test(flavor = "current_thread")]
+#[tokio::test]
 async fn test_money_transfer_with_dev_server() {
     // 1. Start ephemeral dev server
     let config = TemporalDevServerConfig::builder()
@@ -117,8 +122,8 @@ async fn test_money_transfer_with_dev_server() {
         .register_workflow::<MoneyTransferWorkflow>()
         .build();
 
-    let mut worker = Worker::new(&runtime, worker_client, worker_options)
-        .expect("Failed to create worker");
+    let mut worker =
+        Worker::new(&runtime, worker_client, worker_options).expect("Failed to create worker");
     let shutdown_handle = worker.shutdown_handle();
 
     // 4. Create a second client connection for starting workflows
@@ -182,5 +187,8 @@ async fn test_money_transfer_with_dev_server() {
     );
 
     // 7. Shutdown server
-    server.shutdown().await.expect("Failed to shutdown dev server");
+    server
+        .shutdown()
+        .await
+        .expect("Failed to shutdown dev server");
 }
