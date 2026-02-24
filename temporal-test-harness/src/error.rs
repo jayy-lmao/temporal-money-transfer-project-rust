@@ -1,7 +1,4 @@
-use temporalio_common::protos::temporal::api::{
-    common::v1::Payloads,
-    failure::v1::Failure,
-};
+use temporalio_common::protos::temporal::api::{common::v1::Payloads, failure::v1::Failure};
 
 /// The outcome of running a workflow in the test harness.
 ///

@@ -1,26 +1,20 @@
 use std::sync::{Arc, Mutex};
 use std::time::Duration;
 
-use serde::de::DeserializeOwned;
 use serde::Serialize;
-use tokio::sync::Notify;
+use serde::de::DeserializeOwned;
 use temporalio_common::{
     data_converters::DataConverter,
     protos::{
         coresdk::{AsJsonPayloadExt, FromJsonPayloadExt},
-        temporal::api::{
-            command::v1::command,
-            common::v1::Payloads,
-            failure::v1::Failure,
-        },
+        temporal::api::{command::v1::command, common::v1::Payloads, failure::v1::Failure},
     },
 };
 use temporalio_sdk::{
-    Worker as SdkWorker,
-    activities::ActivityImplementer,
-    workflows::WorkflowImplementer,
+    Worker as SdkWorker, activities::ActivityImplementer, workflows::WorkflowImplementer,
 };
 use temporalio_sdk_core::test_help::{MockPollCfg, build_mock_pollers, mock_worker};
+use tokio::sync::Notify;
 
 use crate::error::{TestHarnessError, WorkflowFailure, WorkflowResultError, WorkflowTestResult};
 use crate::history::{ActivityMock, build_history};
@@ -146,7 +140,10 @@ impl TestWorkflowEnvironment {
 
     /// Deserialize and return the successful workflow result.
     pub fn workflow_result<T: DeserializeOwned>(&self) -> Result<T, WorkflowResultError> {
-        let result = self.result.as_ref().ok_or(WorkflowResultError::NotExecuted)?;
+        let result = self
+            .result
+            .as_ref()
+            .ok_or(WorkflowResultError::NotExecuted)?;
         match result {
             Err(failure) => Err(WorkflowResultError::WorkflowFailed(failure.clone())),
             Ok(None) => Err(WorkflowResultError::NoResult),
@@ -241,9 +238,7 @@ async fn execute_internal(
         for cmd in &completion.commands {
             if let Some(ref attrs) = cmd.attributes {
                 match attrs {
-                    command::Attributes::CompleteWorkflowExecutionCommandAttributes(
-                        complete,
-                    ) => {
+                    command::Attributes::CompleteWorkflowExecutionCommandAttributes(complete) => {
                         cap.success = Some(complete.result.clone());
                         done_for_completion.notify_one();
                     }
