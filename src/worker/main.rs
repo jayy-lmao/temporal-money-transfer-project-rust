@@ -9,19 +9,28 @@ use money_transfer_project_template_rust::{
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    println!("Starting up");
     let runtime = CoreRuntime::new_assume_tokio(RuntimeOptions::builder().build()?)?;
 
     let connection = Connection::connect(
-        ConnectionOptions::new(Url::from_str("http://localhost:7233")?).build(),
+        ConnectionOptions::new(Url::from_str("http://localhost:7233")?)
+            .identity("rust-worker".to_string())
+            .build(),
     )
     .await?;
 
+    println!("Connected");
+
     let client = Client::new(connection, ClientOptions::new("default").build())?;
+
+    println!("Client created");
 
     let worker_options = WorkerOptions::new(MONEY_TRANSFER_TASK_QUEUE_NAME)
         .register_activities(Activities)
         .register_workflow::<MoneyTransferWorkflow>()
         .build();
+
+    println!("Options set");
 
     Worker::new(&runtime, client, worker_options)?.run().await?;
     Ok(())

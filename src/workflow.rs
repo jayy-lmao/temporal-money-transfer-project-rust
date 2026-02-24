@@ -32,16 +32,31 @@ impl MoneyTransferWorkflow {
                 "InsufficentFundsError".to_string(),
             ],
         };
-        let options = ActivityOptions {
+        let withdraw_options = ActivityOptions {
+            start_to_close_timeout: Some(std::time::Duration::from_secs_f64(60.)),
+            retry_policy: Some(retry_policy.clone()),
+            ..Default::default()
+        };
+
+        let withdraw_output = ctx
+            .start_activity(Activities::withdraw, input.clone(), withdraw_options)
+            .await?;
+
+        let deposit_options = ActivityOptions {
             start_to_close_timeout: Some(std::time::Duration::from_secs_f64(60.)),
             retry_policy: Some(retry_policy),
             ..Default::default()
         };
 
-        let res = ctx
-            .start_activity(Activities::withdraw, input, options)
+        let deposit_output = ctx
+            .start_activity(Activities::deposit, input, deposit_options)
             .await?;
 
-        Ok(res)
+        let result = format!(
+            "Transfer complete (transaction IDs: {}, {})",
+            withdraw_output, deposit_output
+        );
+
+        Ok(result)
     }
 }

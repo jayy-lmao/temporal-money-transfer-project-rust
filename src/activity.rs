@@ -44,7 +44,8 @@ impl Activities {
             hostname: "bank-api.example.com".to_string(),
         };
 
-        let confirmation = bank.deposit(data.source_account, data.amount, reference_id)?;
+        let confirmation =
+            bank.deposit_that_fails(data.source_account, data.amount, reference_id)?;
 
         Ok(confirmation)
     }

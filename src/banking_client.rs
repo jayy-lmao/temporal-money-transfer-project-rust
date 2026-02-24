@@ -114,11 +114,11 @@ impl BankingService {
 
     pub fn deposit_that_fails(
         &self,
-        account_number: &str,
-        _amount: i64,
-        _reference_id: &str,
+        account_number: String,
+        _amount: Decimal,
+        _reference_id: String,
     ) -> Result<String, BankingError> {
-        let _ = MOCK_BANK.find_account(account_number)?;
+        let _ = MOCK_BANK.find_account(&account_number)?;
         let _confirmation = generate_transaction_id("D", 10);
         Err(InvalidAccountError {
             account_number: account_number.to_string(),

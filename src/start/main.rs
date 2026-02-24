@@ -4,7 +4,6 @@ use temporalio_client::{
     Client, ClientOptions, Connection, ConnectionOptions, WorkflowStartOptions,
 };
 use temporalio_sdk_core::{CoreRuntime, RuntimeOptions, Url};
-use uuid::Uuid;
 
 use money_transfer_project_template_rust::shared::{
     MONEY_TRANSFER_TASK_QUEUE_NAME, PaymentDetails,
@@ -15,7 +14,9 @@ use money_transfer_project_template_rust::workflow::MoneyTransferWorkflow;
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let _runtime = CoreRuntime::new_assume_tokio(RuntimeOptions::builder().build()?)?;
     let connection = Connection::connect(
-        ConnectionOptions::new(Url::from_str("http://localhost:7233")?).build(),
+        ConnectionOptions::new(Url::from_str("http://localhost:7233")?)
+            .identity("rust-client".to_string())
+            .build(),
     )
     .await?;
     let client = Client::new(connection, ClientOptions::new("default").build())?;
@@ -24,10 +25,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         amount: Decimal::new(400, 2), // 4.00
         source_account: "85-150".to_string(),
         target_account: "43-812".to_string(),
-        reference_id: Uuid::new_v4().to_string(),
+        reference_id: "12345".to_string(),
     };
 
-    let workflow_id = format!("pay-invoice-{}", &payment.reference_id);
+    let workflow_id = "pay-invoice-701".to_string();
     let options =
         WorkflowStartOptions::new(MONEY_TRANSFER_TASK_QUEUE_NAME, workflow_id.clone()).build();
 

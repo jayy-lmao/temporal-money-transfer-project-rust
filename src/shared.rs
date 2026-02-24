@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 
 pub const MONEY_TRANSFER_TASK_QUEUE_NAME: &str = "TRANSFER_MONEY_TASK_QUEUE";
 
-#[derive(Deserialize, Serialize)]
+#[derive(Deserialize, Serialize, Clone)]
 pub struct PaymentDetails {
     pub amount: Decimal,
     pub source_account: String,
