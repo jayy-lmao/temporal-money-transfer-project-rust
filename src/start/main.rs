@@ -6,7 +6,9 @@ use temporalio_client::{
 use temporalio_sdk_core::{CoreRuntime, RuntimeOptions, Url};
 use uuid::Uuid;
 
-use money_transfer_project_template_rust::shared::{MONEY_TRANSFER_TASK_QUEUE_NAME, PaymentDetails};
+use money_transfer_project_template_rust::shared::{
+    MONEY_TRANSFER_TASK_QUEUE_NAME, PaymentDetails,
+};
 use money_transfer_project_template_rust::workflow::MoneyTransferWorkflow;
 
 #[tokio::main]
