@@ -3,7 +3,7 @@ use temporalio_client::{Client, ClientOptions, Connection, ConnectionOptions};
 use temporalio_sdk::{Worker, WorkerOptions};
 use temporalio_sdk_core::{CoreRuntime, RuntimeOptions, Url};
 
-use temporal_rs_tutorial::{
+use money_transfer_project_template_rust::{
     activity::Activities, shared::MONEY_TRANSFER_TASK_QUEUE_NAME, workflow::MoneyTransferWorkflow,
 };
 

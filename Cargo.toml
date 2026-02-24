@@ -1,5 +1,5 @@
 [package]
-name = "temporal-rs-tutorial"
+name = "money-transfer-project-template-rust"
 version = "0.1.0"
 edition = "2024"
 
@@ -21,7 +21,7 @@ temporalio-sdk-core = "0.1.0"
 temporalio-client = "0.1.0"
 
 [lib]
-name = "temporal_rs_tutorial"
+name = "money_transfer_project_template_rust"
 path = "src/lib.rs"
 
 [[bin]]

@@ -6,8 +6,8 @@ use temporalio_client::{
 use temporalio_sdk_core::{CoreRuntime, RuntimeOptions, Url};
 use uuid::Uuid;
 
-use temporal_rs_tutorial::shared::{MONEY_TRANSFER_TASK_QUEUE_NAME, PaymentDetails};
-use temporal_rs_tutorial::workflow::MoneyTransferWorkflow;
+use money_transfer_project_template_rust::shared::{MONEY_TRANSFER_TASK_QUEUE_NAME, PaymentDetails};
+use money_transfer_project_template_rust::workflow::MoneyTransferWorkflow;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
